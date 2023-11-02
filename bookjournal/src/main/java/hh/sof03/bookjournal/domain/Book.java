@@ -1,9 +1,13 @@
 package hh.sof03.bookjournal.domain;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
 
 @Entity
 public class Book {
@@ -11,10 +15,21 @@ public class Book {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private long id;
+    
     private String title;
     private String isbn;
     private String releaseYear;
     private String description; 
+
+    @ManyToOne
+    @JsonIgnoreProperties("books") 
+    @JoinColumn(name = "genre_id")
+    private Genre genre;
+
+    @ManyToOne
+    @JsonIgnoreProperties("books")
+    @JoinColumn(name = "author_id")
+    private Author author; 
 
     public Book() {}
 
