@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+	<title>Genres</title>
+	<meta http-equiv="Content-Type" content="text/html" charset="UTF-8">
+	<link type="text/css" rel="stylesheet" href="/css/bootstrap.min.css" th:href="@{/css/bootstrap.min.css}" />
+</head>
+
+<body>
+	<div class="container">
+		<div class=" pt-4 pb-4">
+			<h1>Genres</h1>
+
+			<a th:href="@{/home}" class="btn btn-outline-primary">Home</a>
+			<a th:href="@{/books}" class="btn btn-outline-secondary">Books</a>
+			<a th:href="@{/authors}" class="btn btn-outline-secondary">Authors</a>
+		</div>
+		<table class="table table-striped">
+			<tbody>
+				<tr>
+					<th>Name</th>
+					<th sec:authorize="hasAuthority('ADMIN')"></th>
+				</tr>
+				<tr th:each="genre : ${genres}">
+					<td th:text="${genre.name}"></td>
+					<td sec:authorize="hasAuthority('ADMIN')"><a th:href="@{/editgenre/{id}(id=${genre.genre_id})}"
+							class="btn btn-outline-success">Edit</a></td>
+				</tr>
+			</tbody>
+		</table>
+		<a sec:authorize="hasAuthority('ADMIN')" th:href="@{/addgenre}" class="btn btn-outline-success">Add genre</a>
+	</div>
+</body>
+
+</html>

@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity6">
+
+<head>
+	<title>Book Journal</title>
+	<meta http-equiv="Content-Type" content="text/html" charset="UTF-8">
+	<link type="text/css" rel="stylesheet" href="/css/bootstrap.min.css" th:href="@{/css/bootstrap.min.css}" />
+</head>
+
+<body>
+	<div class="container">
+		<div class=" pt-4 pb-4">
+			<h1>Book Journal</h1>
+			<h3>Welcome <span sec:authentication="name"></span></h3>
+			<div style="padding:20px 0">
+				<form th:action="@{/logout}" method="post">
+					<input type="submit" value="Sign Out" class="btn btn-sm btn-danger" />
+				</form>
+			</div>
+			<a th:href="@{/books}" class="btn btn-outline-secondary">Books</a>
+			<a th:href="@{/authors}" class="btn btn-outline-secondary">Authors</a>
+			<a th:href="@{/genres}" class="btn btn-outline-secondary">Genres</a>
+		</div>
+
+		<div>
+			<div class="hstack gap-5 p-2">
+				<h3>Recent reviews</h3>
+				<div class="ms-auto">
+					<a th:href="@{/new-review}" class="btn btn-success">Write a new review</a>
+				</div>
+			</div>
+			<table class="table table-striped pt-4">
+				<tbody>
+					<tr>
+						<th>Date</th>
+						<th>Author</th>
+						<th>Title</th>
+						<th>Review</th>
+					</tr>
+					<tr th:each="review : ${reviews}">
+						<td th:text="${review.postedDate}"></td>
+						<td th:text="${review.book.author.name}"></td>
+						<td><a th:href="@{/books/{id}(id=${review.book.id})}" th:text="${review.book.title}"></a></td>
+						<td th:text="${review.reviewText}"></td>
+					</tr>
+				</tbody>
+			</table>
+		</div>
+</body>
+
+</html>

@@ -2,7 +2,6 @@ package hh.sof03.bookjournal.domain;
 
 import java.util.List;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 import jakarta.persistence.CascadeType;
@@ -11,13 +10,16 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.OneToMany;
+import jakarta.validation.constraints.NotEmpty;
 
 @Entity
 public class Author {
-    
+
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private long author_id;
+
+    @NotEmpty(message = "Name can't be empty")
     private String name;
 
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "author")
@@ -55,5 +57,4 @@ public class Author {
         this.books = books;
     }
 
-       
 }

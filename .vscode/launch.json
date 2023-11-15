@@ -1,0 +1,14 @@
+{
+    "configurations": [
+        {
+            "type": "java",
+            "name": "Spring Boot-BookjournalApplication<bookjournal>",
+            "request": "launch",
+            "cwd": "${workspaceFolder}",
+            "mainClass": "hh.sof03.bookjournal.BookjournalApplication",
+            "projectName": "bookjournal",
+            "args": "",
+            "envFile": "${workspaceFolder}/.env"
+        }
+    ]
+}

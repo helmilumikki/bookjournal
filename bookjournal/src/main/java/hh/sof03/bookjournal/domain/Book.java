@@ -1,43 +1,57 @@
 package hh.sof03.bookjournal.domain;
 
+import java.util.List;
+
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
+import jakarta.persistence.OneToMany;
+import jakarta.validation.constraints.NotEmpty;
 
 @Entity
 public class Book {
-    
+
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private long id;
-    
+
+    @NotEmpty(message = "Title can't be empty")
     private String title;
+
+    @NotEmpty(message = "ISBN can't be empty")
     private String isbn;
-    private String releaseYear;
-    private String description; 
+
+    private int releaseYear;
 
     @ManyToOne
-    @JsonIgnoreProperties("books") 
+    @JsonIgnoreProperties("books")
     @JoinColumn(name = "genre_id")
     private Genre genre;
 
     @ManyToOne
     @JsonIgnoreProperties("books")
     @JoinColumn(name = "author_id")
-    private Author author; 
+    private Author author;
 
-    public Book() {}
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "book")
+    @JsonIgnoreProperties("book")
+    private List<Review> reviews;
 
-    public Book(String title, String isbn, String releaseYear, String description) {
+    public Book() {
+    }
+
+    public Book(String title, String isbn, int releaseYear, Genre genre, Author author) {
         this.title = title;
         this.isbn = isbn;
         this.releaseYear = releaseYear;
-        this.description = description;
+        this.genre = genre;
+        this.author = author;
     }
 
     public long getId() {
@@ -64,21 +78,36 @@ public class Book {
         this.isbn = isbn;
     }
 
-    public String getReleaseYear() {
+    public int getReleaseYear() {
         return releaseYear;
     }
 
-    public void setReleaseYear(String releaseYear) {
+    public void setReleaseYear(int releaseYear) {
         this.releaseYear = releaseYear;
     }
 
-    public String getDescription() {
-        return description;
+    public Genre getGenre() {
+        return genre;
     }
 
-    public void setDescription(String description) {
-        this.description = description;
+    public void setGenre(Genre genre) {
+        this.genre = genre;
     }
 
-    
+    public Author getAuthor() {
+        return author;
+    }
+
+    public void setAuthor(Author author) {
+        this.author = author;
+    }
+
+    public List<Review> getReviews() {
+        return reviews;
+    }
+
+    public void setReviews(List<Review> reviews) {
+        this.reviews = reviews;
+    }
+
 }

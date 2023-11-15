@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+	<title th:text="${book.title}"></title>
+	<meta http-equiv="Content-Type" content="text/html" charset="UTF-8">
+	<link type="text/css" rel="stylesheet" href="/css/bootstrap.min.css" th:href="@{/css/bootstrap.min.css}" />
+</head>
+
+<body>
+	<div class="container">
+		<div class=" pt-4 pb-4">
+			<h1 th:text="${book.title}"></h1>
+
+			<a th:href="@{/home}" class="btn btn-outline-primary">Home</a>
+			<a th:href="@{/books}" class="btn btn-outline-secondary">Books</a>
+			<a th:href="@{/authors}" class="btn btn-outline-secondary">Authors</a>
+			<a th:href="@{/genres}" class="btn btn-outline-secondary">Genres</a>
+		</div>
+
+
+		<table class="table table-striped">
+			<tbody>
+				<tr>
+					<th>Title</th>
+					<th>Author</th>
+					<th>ISBN</th>
+					<th>Year</th>
+					<th>Genre</th>
+					<th sec:authorize="hasAuthority('ADMIN')"></th>
+					<th sec:authorize="hasAuthority('ADMIN')"></th>
+				</tr>
+				<tr>
+					<td th:text="${book.title}"></td>
+					<td th:text="${book.author.name}"></td>
+					<td th:text="${book.isbn}"></td>
+					<td th:text="${book.releaseYear}"></td>
+					<td th:text="${book.genre.name}"></td>
+					<td sec:authorize="hasAuthority('ADMIN')"><a th:href="@{/edit/{id}(id=${book.id})}"
+							class="btn btn-outline-success">Edit</a></td>
+					<td sec:authorize="hasAuthority('ADMIN')">
+						<a th:href="@{/deletebook/{id}(id=${book.id})}" class="btn btn-outline-danger">Delete</a>
+					</td>
+				</tr>
+			</tbody>
+		</table>
+
+		<div>
+			<div class="hstack gap-5 p-2">
+				<h3>Reviews</h3>
+				<div class="ms-auto">
+					<a th:href="@{/new-review}" class="btn btn-success">Write a new review</a>
+				</div>
+			</div>
+			<table class="table table-striped">
+				<tbody>
+					<tr>
+						<th>Date</th>
+						<th></th>
+					</tr>
+					<tr th:each="review : ${reviews}">
+						<td th:text="${review.postedDate}"></td>
+						<td th:text="${review.reviewText}"></td>
+					</tr>
+				</tbody>
+			</table>
+
+		</div>
+	</div>
+</body>
+
+</html>

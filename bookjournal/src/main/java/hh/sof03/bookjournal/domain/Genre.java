@@ -10,17 +10,20 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.OneToMany;
+import jakarta.validation.constraints.NotEmpty;
 
 @Entity
 public class Genre {
-    
+
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private long genre_id;
+
+    @NotEmpty(message = "Name can't be empty")
     private String name;
-    
+
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "genre")
-    @JsonIgnoreProperties ("genre") 
+    @JsonIgnoreProperties("genre")
     private List<Book> books;
 
     public Genre() {
@@ -30,12 +33,12 @@ public class Genre {
         this.name = name;
     }
 
-    public long getGenreid() {
+    public long getGenre_id() {
         return genre_id;
     }
 
-    public void setGenreid(long genreid) {
-        this.genre_id = genreid;
+    public void setGenre_id(long genre_id) {
+        this.genre_id = genre_id;
     }
 
     public String getName() {
@@ -53,7 +56,5 @@ public class Genre {
     public void setBooks(List<Book> books) {
         this.books = books;
     }
-
-    
 
 }

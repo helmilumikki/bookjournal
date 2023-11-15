@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+	<title>Authors</title>
+	<meta http-equiv="Content-Type" content="text/html" charset="UTF-8">
+	<link type="text/css" rel="stylesheet" href="/css/bootstrap.min.css" th:href="@{/css/bootstrap.min.css}" />
+</head>
+
+<body>
+	<div class="container">
+		<div class=" pt-4 pb-4">
+			<h1>Authors</h1>
+
+			<a th:href="@{/home}" class="btn btn-outline-primary">Home</a>
+			<a th:href="@{/books}" class="btn btn-outline-secondary">Books</a>
+			<a th:href="@{/genres}" class="btn btn-outline-secondary">Genres</a>
+
+		</div>
+		<table class="table table-striped">
+			<tbody>
+				<tr>
+					<th>Name</th>
+					<th sec:authorize="hasAuthority('ADMIN')"></th>
+				</tr>
+				<tr th:each="author : ${authors}">
+					<td th:text="${author.name}"></td>
+					<td sec:authorize="hasAuthority('ADMIN')"><a th:href="@{/editauthor/{id}(id=${author.author_id})}"
+							class="btn btn-outline-success">Edit</a></td>
+				</tr>
+			</tbody>
+		</table>
+		<a sec:authorize="hasAuthority('ADMIN')" th:href="@{/addauthor}" class="btn btn-outline-success">Add author</a>
+	</div>
+</body>
+
+</html>
